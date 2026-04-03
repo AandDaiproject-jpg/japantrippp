@@ -1,0 +1,1543 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>초저가 오사카 여행 3박4일 | 인당 단 60만원!</title>
+    <meta name="description" content="초저가로 떠나는 완벽한 오사카 3박4일 여행 패키지. 항공, 숙소, 맛집, 관광지까지 총정리!">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Outfit:wght@300;400;600;700;800;900&family=Zen+Dots+Gothic:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+    <style>
+        /* ===== DESIGN SYSTEM: CSS VARIABLES ===== */
+        :root {
+            /* Core Palette */
+            --sakura: #FF6B9D;
+            --sakura-light: #FFB3CC;
+            --sakura-dark: #D4446E;
+            --gold: #FDB813;
+            --gold-light: #FFE082;
+            --neon: #FF1493;
+            --neon-glow: #FF69B4;
+            --nintendo: #0066FF;
+            --nintendo-light: #4D94FF;
+            --dark: #1A1A2E;
+            --dark-mid: #2A2A4A;
+            --dark-light: #3A3A5E;
+            --surface: #16213E;
+            --surface-light: #1E2D50;
+            --text-primary: #FFFFFF;
+            --text-secondary: #B0B8D6;
+            --text-muted: #6B7394;
+            --success: #00E676;
+            --warning: #FFB020;
+            --error: #FF4060;
+
+            /* Typography */
+            --font-display: 'Outfit', 'Noto Sans KR', sans-serif;
+            --font-body: 'Noto Sans KR', sans-serif;
+            --font-accent: 'Zen Dots Gothic', cursive;
+
+            /* Spacing Scale (8px base) */
+            --space-1: 0.25rem;
+            --space-2: 0.5rem;
+            --space-3: 0.75rem;
+            --space-4: 1rem;
+            --space-5: 1.25rem;
+            --space-6: 1.5rem;
+            --space-8: 2rem;
+            --space-10: 2.5rem;
+            --space-12: 3rem;
+            --space-16: 4rem;
+            --space-20: 5rem;
+            --space-24: 6rem;
+
+            /* Radii */
+            --radius-sm: 0.5rem;
+            --radius-md: 0.75rem;
+            --radius-lg: 1rem;
+            --radius-xl: 1.5rem;
+            --radius-full: 9999px;
+
+            /* Shadows */
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.3);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.4);
+            --shadow-lg: 0 8px 40px rgba(0,0,0,0.5);
+            --shadow-neon: 0 0 30px rgba(255,20,147,0.3);
+            --shadow-gold: 0 0 30px rgba(253,184,19,0.3);
+            --shadow-blue: 0 0 30px rgba(0,102,255,0.3);
+
+            /* Transitions */
+            --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+            --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --duration-fast: 0.2s;
+            --duration-base: 0.3s;
+            --duration-slow: 0.6s;
+        }
+
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: var(--dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* ===== UTILITIES ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.75rem, 4vw, 2.75rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            margin-bottom: var(--space-3);
+        }
+
+        .section-subtitle {
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
+            color: var(--text-secondary);
+            font-weight: 400;
+            max-width: 600px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-1);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 0.02em;
+        }
+
+        /* ===== SCROLL ANIMATIONS ===== */
+        .reveal {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+        }
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            padding: var(--space-4) var(--space-6);
+            transition: background var(--duration-base), backdrop-filter var(--duration-base), box-shadow var(--duration-base);
+        }
+        .nav.scrolled {
+            background: rgba(26,26,46,0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 1px 0 rgba(255,255,255,0.05);
+        }
+        .nav-inner {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .nav-logo {
+            font-family: var(--font-accent);
+            font-size: 1.3rem;
+            color: var(--sakura);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+        .nav-logo span {
+            font-size: 1.5rem;
+        }
+        .nav-cta {
+            background: linear-gradient(135deg, var(--sakura), var(--neon));
+            color: white;
+            border: none;
+            padding: var(--space-2) var(--space-5);
+            border-radius: var(--radius-full);
+            font-family: var(--font-body);
+            font-size: 0.85rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform var(--duration-fast), box-shadow var(--duration-fast);
+        }
+        .nav-cta:hover {
+            transform: scale(1.05);
+            box-shadow: var(--shadow-neon);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+            padding: var(--space-24) var(--space-6) var(--space-16);
+        }
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 80%, rgba(255,107,157,0.25) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 80% 20%, rgba(0,102,255,0.2) 0%, transparent 55%),
+                radial-gradient(ellipse 50% 40% at 50% 50%, rgba(253,184,19,0.15) 0%, transparent 50%),
+                linear-gradient(160deg, var(--dark) 0%, var(--surface) 40%, var(--dark-mid) 100%);
+            z-index: 0;
+        }
+        .hero-bg::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+            opacity: 0.5;
+            pointer-events: none;
+        }
+
+        /* Floating decorations */
+        .float-decor {
+            position: absolute;
+            font-size: 2.5rem;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.7;
+            animation: floatUp 6s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(255,107,157,0.3));
+        }
+        .float-decor:nth-child(1) { left: 5%; top: 15%; animation-delay: 0s; font-size: 2rem; }
+        .float-decor:nth-child(2) { right: 8%; top: 25%; animation-delay: 1s; font-size: 3rem; }
+        .float-decor:nth-child(3) { left: 12%; bottom: 25%; animation-delay: 2s; font-size: 2.2rem; }
+        .float-decor:nth-child(4) { right: 15%; bottom: 35%; animation-delay: 0.5s; font-size: 2.8rem; }
+        .float-decor:nth-child(5) { left: 40%; top: 10%; animation-delay: 1.5s; font-size: 1.8rem; }
+        .float-decor:nth-child(6) { right: 30%; bottom: 15%; animation-delay: 3s; font-size: 2.3rem; }
+        .float-decor:nth-child(7) { left: 60%; top: 30%; animation-delay: 2.5s; font-size: 2rem; }
+        .float-decor:nth-child(8) { left: 25%; bottom: 10%; animation-delay: 3.5s; font-size: 1.6rem; }
+
+        @keyframes floatUp {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            50% { transform: translateY(-10px) rotate(-3deg); }
+            75% { transform: translateY(-25px) rotate(2deg); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+        .hero-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            background: rgba(255,107,157,0.15);
+            border: 1px solid rgba(255,107,157,0.25);
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            color: var(--sakura-light);
+            font-weight: 500;
+            margin-bottom: var(--space-8);
+            animation: fadeInDown 0.8s var(--ease-out) both;
+        }
+        .hero-tag .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--sakura);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(1.5); }
+        }
+        .hero-title {
+            font-family: var(--font-display);
+            font-size: clamp(2.2rem, 6vw, 4rem);
+            font-weight: 900;
+            line-height: 1.1;
+            letter-spacing: -0.03em;
+            margin-bottom: var(--space-6);
+            animation: fadeInUp 0.8s var(--ease-out) 0.1s both;
+        }
+        .hero-title .highlight {
+            background: linear-gradient(135deg, var(--sakura), var(--gold), var(--neon));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .hero-subtitle {
+            font-size: clamp(1rem, 2.5vw, 1.25rem);
+            color: var(--text-secondary);
+            font-weight: 300;
+            margin-bottom: var(--space-10);
+            line-height: 1.7;
+            animation: fadeInUp 0.8s var(--ease-out) 0.2s both;
+        }
+        .hero-actions {
+            display: flex;
+            gap: var(--space-4);
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 0.8s var(--ease-out) 0.3s both;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, var(--sakura), var(--neon));
+            color: white;
+            border: none;
+            padding: var(--space-4) var(--space-8);
+            border-radius: var(--radius-full);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: transform var(--duration-fast), box-shadow var(--duration-fast);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 8px 30px rgba(255,20,147,0.4);
+        }
+        .btn-secondary {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: var(--text-primary);
+            padding: var(--space-4) var(--space-8);
+            border-radius: var(--radius-full);
+            font-family: var(--font-body);
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all var(--duration-fast);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+        }
+        .btn-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.2);
+        }
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-10);
+            margin-top: var(--space-12);
+            animation: fadeInUp 0.8s var(--ease-out) 0.4s both;
+        }
+        .hero-stat {
+            text-align: center;
+        }
+        .hero-stat-value {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--gold);
+        }
+        .hero-stat-label {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: var(--space-1);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== HIGHLIGHTS SECTION ===== */
+        .highlights {
+            padding: var(--space-20) 0;
+            position: relative;
+        }
+        .highlights-header {
+            text-align: center;
+            margin-bottom: var(--space-12);
+        }
+        .highlights-header .section-title span {
+            color: var(--sakura);
+        }
+        .highlights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: var(--space-6);
+        }
+        .highlight-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05), rgba(255,255,255,0.02));
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
+            transition: transform var(--duration-base) var(--ease-out), box-shadow var(--duration-base), border-color var(--duration-base);
+            position: relative;
+            overflow: hidden;
+        }
+        .highlight-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            opacity: 0;
+            transition: opacity var(--duration-base);
+        }
+        .highlight-card:nth-child(1)::before { background: linear-gradient(90deg, var(--sakura), var(--neon)); }
+        .highlight-card:nth-child(2)::before { background: linear-gradient(90deg, var(--nintendo), var(--nintendo-light)); }
+        .highlight-card:nth-child(3)::before { background: linear-gradient(90deg, var(--gold), var(--gold-light)); }
+        .highlight-card:nth-child(4)::before { background: linear-gradient(90deg, var(--success), #00B894); }
+
+        .highlight-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(255,255,255,0.1);
+            box-shadow: var(--shadow-md);
+        }
+        .highlight-card:hover::before {
+            opacity: 1;
+        }
+        .highlight-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            margin-bottom: var(--space-5);
+        }
+        .highlight-card:nth-child(1) .highlight-icon { background: rgba(255,107,157,0.15); }
+        .highlight-card:nth-child(2) .highlight-icon { background: rgba(0,102,255,0.15); }
+        .highlight-card:nth-child(3) .highlight-icon { background: rgba(253,184,19,0.15); }
+        .highlight-card:nth-child(4) .highlight-icon { background: rgba(0,230,118,0.15); }
+
+        .highlight-card h3 {
+            font-family: var(--font-display);
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: var(--space-3);
+        }
+        .highlight-card p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+        .highlight-card .card-badge {
+            margin-top: var(--space-4);
+        }
+
+        /* ===== TIMELINE / ITINERARY SECTION ===== */
+        .itinerary {
+            padding: var(--space-20) 0;
+            background: linear-gradient(180deg, transparent, rgba(22,33,62,0.5), transparent);
+        }
+        .itinerary-header {
+            text-align: center;
+            margin-bottom: var(--space-10);
+        }
+        .itinerary-header .section-title span {
+            color: var(--gold);
+        }
+        .day-tabs {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-3);
+            margin-bottom: var(--space-8);
+            flex-wrap: wrap;
+        }
+        .day-tab {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: var(--text-secondary);
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--radius-full);
+            font-family: var(--font-display);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--duration-fast);
+        }
+        .day-tab:hover {
+            border-color: rgba(255,255,255,0.15);
+            color: var(--text-primary);
+        }
+        .day-tab.active {
+            background: linear-gradient(135deg, var(--sakura), var(--neon));
+            border-color: transparent;
+            color: white;
+            box-shadow: var(--shadow-neon);
+        }
+        .day-content {
+            display: none;
+        }
+        .day-content.active {
+            display: block;
+            animation: fadeInUp 0.5s var(--ease-out);
+        }
+        .timeline {
+            position: relative;
+            padding-left: var(--space-10);
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--sakura), var(--gold), var(--nintendo));
+            border-radius: 1px;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: var(--space-6);
+        }
+        .timeline-dot {
+            position: absolute;
+            left: calc(-1 * var(--space-10) + 9px);
+            top: var(--space-4);
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 2px solid var(--sakura);
+            background: var(--dark);
+            z-index: 2;
+        }
+        .timeline-item:nth-child(2n) .timeline-dot { border-color: var(--gold); }
+        .timeline-item:nth-child(3n) .timeline-dot { border-color: var(--nintendo); }
+
+        .timeline-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: var(--radius-lg);
+            padding: var(--space-5) var(--space-6);
+            transition: border-color var(--duration-fast), background var(--duration-fast);
+        }
+        .timeline-card:hover {
+            border-color: rgba(255,255,255,0.12);
+            background: rgba(255,255,255,0.06);
+        }
+        .timeline-time {
+            font-family: var(--font-display);
+            font-size: 0.8rem;
+            color: var(--sakura);
+            font-weight: 700;
+            letter-spacing: 0.04em;
+            margin-bottom: var(--space-2);
+        }
+        .timeline-card h4 {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+        .timeline-card p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+        .timeline-cost {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-1);
+            margin-top: var(--space-3);
+            background: rgba(253,184,19,0.1);
+            color: var(--gold);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-full);
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        /* ===== BUDGET SECTION ===== */
+        .budget {
+            padding: var(--space-20) 0;
+        }
+        .budget-header {
+            text-align: center;
+            margin-bottom: var(--space-12);
+        }
+        .budget-header .section-title span {
+            color: var(--neon);
+        }
+        .budget-layout {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-10);
+            align-items: start;
+        }
+        .budget-chart-wrap {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius-xl);
+            padding: var(--space-8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .budget-chart-wrap canvas {
+            max-width: 100%;
+            max-height: 320px;
+        }
+        .budget-details {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-4);
+        }
+        .budget-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            padding: var(--space-4) var(--space-5);
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius-lg);
+            transition: all var(--duration-fast);
+        }
+        .budget-item:hover {
+            background: rgba(255,255,255,0.06);
+            border-color: rgba(255,255,255,0.1);
+        }
+        .budget-item-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+        .budget-item-info {
+            flex: 1;
+        }
+        .budget-item-label {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .budget-item-desc {
+            font-size: 0.78rem;
+            color: var(--text-muted);
+            margin-top: 2px;
+        }
+        .budget-item-amount {
+            font-family: var(--font-display);
+            font-weight: 700;
+            font-size: 1.05rem;
+        }
+        .budget-total {
+            margin-top: var(--space-6);
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255,20,147,0.1), rgba(253,184,19,0.1));
+            border: 1px solid rgba(255,107,157,0.2);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6) var(--space-8);
+        }
+        .budget-total-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-2);
+        }
+        .budget-total-amount {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, var(--sakura), var(--gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .budget-total-note {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: var(--space-2);
+        }
+
+        /* ===== TIPS SECTION ===== */
+        .tips {
+            padding: var(--space-20) 0;
+            background: linear-gradient(180deg, transparent, rgba(22,33,62,0.5), transparent);
+        }
+        .tips-header {
+            text-align: center;
+            margin-bottom: var(--space-12);
+        }
+        .tips-header .section-title span {
+            color: var(--success);
+        }
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: var(--space-5);
+        }
+        .tip-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            transition: all var(--duration-fast);
+            position: relative;
+        }
+        .tip-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.05);
+        }
+        .tip-card-icon {
+            font-size: 1.8rem;
+            margin-bottom: var(--space-3);
+        }
+        .tip-card h4 {
+            font-family: var(--font-display);
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: var(--space-2);
+        }
+        .tip-card p {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .savings-badge {
+            position: absolute;
+            top: var(--space-4);
+            right: var(--space-4);
+            background: rgba(0,230,118,0.15);
+            color: var(--success);
+            padding: var(--space-1) var(--space-3);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        /* ===== SPOTS SECTION ===== */
+        .spots {
+            padding: var(--space-20) 0;
+        }
+        .spots-header {
+            text-align: center;
+            margin-bottom: var(--space-12);
+        }
+        .spots-header .section-title span {
+            color: var(--nintendo-light);
+        }
+        .spots-scroll {
+            display: flex;
+            gap: var(--space-5);
+            overflow-x: auto;
+            padding-bottom: var(--space-6);
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.1) transparent;
+        }
+        .spots-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+        .spots-scroll::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .spots-scroll::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+        }
+        .spot-card {
+            min-width: 260px;
+            max-width: 300px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            scroll-snap-align: start;
+            transition: all var(--duration-base);
+            flex-shrink: 0;
+        }
+        .spot-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255,255,255,0.12);
+            box-shadow: var(--shadow-md);
+        }
+        .spot-img {
+            width: 100%;
+            height: 170px;
+            object-fit: cover;
+            display: block;
+            background: linear-gradient(135deg, var(--surface), var(--dark-mid));
+        }
+        .spot-body {
+            padding: var(--space-5);
+        }
+        .spot-name {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+        }
+        .spot-meta {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: var(--space-3);
+        }
+        .spot-cost {
+            font-size: 0.85rem;
+            color: var(--gold);
+            font-weight: 700;
+        }
+        .spot-rating {
+            color: var(--gold);
+            font-size: 0.85rem;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: var(--space-16) 0 var(--space-8);
+            text-align: center;
+            background: linear-gradient(180deg, transparent, rgba(22,33,62,0.8));
+        }
+        .footer-cta-wrap {
+            margin-bottom: var(--space-12);
+        }
+        .footer-cta-title {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 4vw, 2.5rem);
+            font-weight: 800;
+            margin-bottom: var(--space-4);
+        }
+        .footer-cta-title span {
+            background: linear-gradient(135deg, var(--sakura), var(--gold));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .footer-cta-sub {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: var(--space-8);
+        }
+        .footer-divider {
+            width: 60px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--sakura), var(--gold));
+            margin: 0 auto var(--space-6);
+            border-radius: 1px;
+        }
+        .footer-copy {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+        }
+        .footer-copy a {
+            color: var(--sakura);
+            text-decoration: none;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .hero-stats {
+                gap: var(--space-6);
+            }
+            .budget-layout {
+                grid-template-columns: 1fr;
+            }
+            .float-decor {
+                opacity: 0.4;
+                font-size: 1.5rem;
+            }
+            .timeline {
+                padding-left: var(--space-8);
+            }
+            .timeline::before {
+                left: 10px;
+            }
+            .timeline-dot {
+                left: calc(-1 * var(--space-8) + 4px);
+            }
+        }
+        @media (max-width: 480px) {
+            .hero-stats {
+                flex-direction: column;
+                gap: var(--space-4);
+            }
+            .day-tabs {
+                gap: var(--space-2);
+            }
+            .day-tab {
+                padding: var(--space-2) var(--space-4);
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== NAVIGATION ===== -->
+    <nav class="nav" role="navigation" aria-label="메인 내비게이션">
+        <div class="nav-inner">
+            <a href="#" class="nav-logo" aria-label="오사카 여행 홈">
+                <span>⛩️</span> 오사카여행
+            </a>
+            <a href="#itinerary" class="nav-cta">여행 플랜 보기</a>
+        </div>
+    </nav>
+
+    <!-- ===== HERO SECTION ===== -->
+    <section class="hero" aria-label="히어로">
+        <div class="hero-bg" aria-hidden="true"></div>
+
+        <span class="float-decor" aria-hidden="true">🍣</span>
+        <span class="float-decor" aria-hidden="true">🍜</span>
+        <span class="float-decor" aria-hidden="true">⛩️</span>
+        <span class="float-decor" aria-hidden="true">🗼</span>
+        <span class="float-decor" aria-hidden="true">🏯</span>
+        <span class="float-decor" aria-hidden="true">🎋</span>
+        <span class="float-decor" aria-hidden="true">🎎</span>
+        <span class="float-decor" aria-hidden="true">🍡</span>
+
+        <div class="hero-content">
+            <div class="hero-tag">
+                <span class="pulse-dot" aria-hidden="true"></span>
+                다음주 출발 · 잔여 석수 한정
+            </div>
+            <h1 class="hero-title">
+                오사카 3박4일<br>
+                인당 단 <span class="highlight">60만원!</span>
+            </h1>
+            <p class="hero-subtitle">
+                초저가로 떠나는 완벽한 오사카 여행<br>
+                항공+숙소+식사 모두 포함, 지갑은 가볍게 추억은 듬뿍
+            </p>
+            <div class="hero-actions">
+                <a href="#itinerary" class="btn-primary">
+                    🗾 여행 플랜 보기
+                </a>
+                <a href="#budget" class="btn-secondary">
+                    💰 예산 확인하기
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-value">3박 4일</div>
+                    <div class="hero-stat-label">여행 기간</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">12곳</div>
+                    <div class="hero-stat-label">방문 명소</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-value">60만원</div>
+                    <div class="hero-stat-label">인당 총경비</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== HIGHLIGHTS SECTION ===== -->
+    <section class="highlights reveal" aria-label="여행 하이라이트">
+        <div class="container">
+            <div class="highlights-header">
+                <h2 class="section-title">이래서 <span>초저가</span> 가능합니다</h2>
+                <p class="section-subtitle">철저한 가성비 분석으로 최고의 여행을 최저가에 제공합니다</p>
+            </div>
+            <div class="highlights-grid">
+                <article class="highlight-card">
+                    <div class="highlight-icon">✈️</div>
+                    <h3>항공 최저가 보장</h3>
+                    <p>피치항공·제주항공 특가 타임워칭으로 왕복 15만원대 가능. 수하물 추가비용 없이 캐리어 20kg 포함</p>
+                    <div class="card-badge badge" style="background:rgba(255,107,157,0.12);color:var(--sakura);">
+                        🔥 특가 진행중
+                    </div>
+                </article>
+                <article class="highlight-card">
+                    <div class="highlight-icon">🏨</div>
+                    <h3>숙소 숨은 꿀팁</h3>
+                    <p>난바·우메다 도보권 게스트하우스 1박 2만원대. 2인1실 기준으로 3박 총 6만원대 가능</p>
+                    <div class="card-badge badge" style="background:rgba(0,102,255,0.12);color:var(--nintendo-light);">
+                        ⭐ 4.5 이상 숙소
+                    </div>
+                </article>
+                <article class="highlight-card">
+                    <div class="highlight-icon">🍜</div>
+                    <h3>맛집 코스 완성</h3>
+                    <p>타코야키 500엔, 라멘 800엔, 이자카야 세트 2000엔. 하루 식비 5천엔(약 4.5만원)으로 골라먹는 맛집 투어</p>
+                    <div class="card-badge badge" style="background:rgba(253,184,19,0.12);color:var(--gold);">
+                        🍽️ 15곳 맛집 리스트
+                    </div>
+                </article>
+                <article class="highlight-card">
+                    <div class="highlight-icon">🎯</div>
+                    <h3>무료 관광 명소</h3>
+                    <p>도톤보리·신사이바시·오사카성 공원·텐노지공원 전부 무료. 유료 명소는 1일 패스로 50% 할인</p>
+                    <div class="card-badge badge" style="background:rgba(0,230,118,0.12);color:var(--success);">
+                        ✅ 8곳 무료 명소
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== ITINERARY SECTION ===== -->
+    <section class="itinerary reveal" id="itinerary" aria-label="여행 일정">
+        <div class="container">
+            <div class="itinerary-header">
+                <h2 class="section-title">3박4일 <span>완벽 일정</span></h2>
+                <p class="section-subtitle">하루하루 최적화된 동선으로 시간 낭비 없이 오사카를 200% 즐기세요</p>
+            </div>
+
+            <div class="day-tabs" role="tablist" aria-label="일정 날짜 선택">
+                <button class="day-tab active" role="tab" aria-selected="true" aria-controls="day1" data-day="day1">DAY 1</button>
+                <button class="day-tab" role="tab" aria-selected="false" aria-controls="day2" data-day="day2">DAY 2</button>
+                <button class="day-tab" role="tab" aria-selected="false" aria-controls="day3" data-day="day3">DAY 3</button>
+                <button class="day-tab" role="tab" aria-selected="false" aria-controls="day4" data-day="day4">DAY 4</button>
+            </div>
+
+            <!-- DAY 1 -->
+            <div class="day-content active" id="day1" role="tabpanel" aria-label="1일차 일정">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-time">07:00</div>
+                            <h4>🛫 인천 → 간사이 공항</h4>
+                            <p>피치항공 편으로 출발. 공항에서 난바까지 난카이 전철 특급 라피트 40분</p>
+                            <div class="timeline-cost">💰 교통비 약 ¥1,440 (약 13,000원)</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-time">11:30</div>
+                            <h4>🏨 난바 숙소 체크인 & 짐 풀기</h4>
+                            <p>난바역 도보 5분 거리 게스트하우스. 짐을 풀고 가볍게 오사카 탐험 시작</p>
+                            <div class="timeline-cost">💰 숙소 1박 약 20,000원</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-time">13:00</div>
+                            <h4>🍣 도톤보리 점심 & 산책</h4>
+                            <p>거대한 긴타로 타코야키 맛보기. 그리코 간판 앞에서 인증샷. 난바·신사이바시 쇼핑거리 구경</p>
+                            <div class="timeline-cost">💰 점심 약 ¥1,000 (약 9,000원)</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-time">18:00</div>
+                            <h4>🏮 호우젠지 요코초 이자카야 저녁</h4>
+                            <p>골목길 분위기 좋은 이자카야에서 오코노미야키·야키토리 세트. 생맥주와 함께 오사카의 밤 만끽</p>
+                            <div class="timeline-cost">💰 저녁 약 ¥2,000 (약 18,000원)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DAY 2 -->
+            <div class="day-content" id="day2" role="tabpanel" aria-label="2일차 일정">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-time">08:00</div>
+                            <h4>☕ 아침 — 편의점 오니기리 & 커피</h4>
+                            <p>일본 편의점에서 간단한 아침. 세븐일레븐 오니기리 3개 + 캔커피로 든든하게</p>
+                            <div class="timeline-cost">💰 약 ¥500 (약 4,500원)</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-time">09:30</div>
+                            <h4>🏯 오사카성 탐험</h4>
+                            <p>오사카의 랜드마크! 공원은 무료, 천수각 입장 ¥600. 주변 겐포쿠마치 산책도 추천</p>
+                            <div class="timeline-cost">💰 입장료 ¥600 (약 5,500원)</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-time">12:30</div>
+                            <h4>🍜 쿠로몬 시장 점심</h4>
+                            <p>오사카 주방이라 불리는 쿠로몬 시장에서 신선한 해산물구이·와규꼬치·과일 시식 투어</p>
+                            <div class="timeline-cost">💰 약 ¥1,500 (약 13,500원)</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-time">14:30</div>
+                            <h4>🛍️ 신세카이 & 츠텐카쿠</h4>
+                            <p>레트로 감성 가득한 신세카이 거리. 츠텐카쿠 전망대(¥1,000)에서 오사카 시내 전경 감상</p>
+                            <div class="timeline-cost">💰 전망대 ¥1,000 (약 9,000원)</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-time">19:00</div>
+                            <h4>🍢 난바 야시장 & 야식 투어</h4>
+                            <p>저녁엔 다시 난바로. 구운 문어·명란관자·가리봉 등 야시장 길거리 음식 투어</p>
+                            <div class="timeline-cost">💰 약 ¥1,500 (약 13,500원)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DAY 3 -->
+            <div class="day-content" id="day3" role="tabpanel" aria-label="3일차 일정">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-time">08:30</div>
+                            <h4>🐻 유니버설 스튜디오 재팬</h4>
+                            <p>마리오 월드·해리포터·미니언 파크까지! 1일 스루 패스로 대기열 없이 즐기기</p>
+                            <div class="timeline-cost">💰 1일 패스 약 ¥8,600 (약 78,000원)</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-time">12:00</div>
+                            <h4>🍔 USJ 파크 내 점심</h4>
+                            <p>마리오 카페에서 버거 세트. 해리포터 테마 레스토랑도 추천 (예약 필요)</p>
+                            <div class="timeline-cost">💰 약 ¥2,000 (약 18,000원)</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-time">18:00</div>
+                            <h4>🌆 텐포잔 하버빌리지 석양</h4>
+                            <p>USJ 후 근처 텐포잔에서 관람차 타고 석양 감상. 천보산 전망대 무료!</p>
+                            <div class="timeline-cost">💰 관람차 ¥800 (약 7,300원)</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-time">20:00</div>
+                            <h4>🍖 가이세키 저녁 (숙소 근처)</h4>
+                            <p>숙소 근처 가성비 이자카야에서 하루 피로 풀기. 오코노미야키·모듬야키토리 세트</p>
+                            <div class="timeline-cost">💰 약 ¥1,800 (약 16,500원)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DAY 4 -->
+            <div class="day-content" id="day4" role="tabpanel" aria-label="4일차 일정">
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-time">07:30</div>
+                            <h4>🛍️ 아메무라 & 난바 파크스 쇼핑</h4>
+                            <p>오사카 최고의 쇼핑 스팟! 빈티지 숍·감성 카페가 모인 아메무라 탐험 후 난바 파크스에서 롯데리아·구키이 정품을 면세 가격에 구입</p>
+                            <div class="timeline-cost">💰 무료</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-time">09:00</div>
+                            <h4>🛒 돈키호테 & 약국 쇼핑</h4>
+                            <p>마지막 날 필수 코스! 로켓 프라이스 약국에서 면세 쇼핑. 과자·약·화장품 싹쓸이</p>
+                            <div class="timeline-cost">💰 예산 약 50,000원 (선택)</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-time">11:30</div>
+                            <h4>🍜 마지막 라멘 — 긴카쿠지 라멘</h4>
+                            <p>일본에서 마지막으로 먹는 진짜 라멘. 진한 돈코츠 육수로 추억 각인</p>
+                            <div class="timeline-cost">💰 약 ¥900 (약 8,200원)</div>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-card">
+                            <div class="timeline-time">14:00</div>
+                            <h4>🛫 간사이 공항 → 인천 귀국</h4>
+                            <p>난카이 라피트로 공항 이동. 면세점 마지막 쇼핑 후 즐거운 귀국길</p>
+                            <div class="timeline-cost">💰 교통비 약 ¥1,440 (약 13,000원)</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== BUDGET SECTION ===== -->
+    <section class="budget reveal" id="budget" aria-label="예산 분석">
+        <div class="container">
+            <div class="budget-header">
+                <h2 class="section-title">예산 <span>투명 공개</span></h2>
+                <p class="section-subtitle">숨은 비용 없이 모든 항목을 투명하게 공개합니다</p>
+            </div>
+            <div class="budget-layout">
+                <div class="budget-chart-wrap">
+                    <canvas id="budgetChart" aria-label="예산 분배 차트" role="img"></canvas>
+                </div>
+                <div>
+                    <div class="budget-details">
+                        <div class="budget-item">
+                            <div class="budget-item-dot" style="background:var(--sakura)"></div>
+                            <div class="budget-item-info">
+                                <div class="budget-item-label">✈️ 항공 (왕복)</div>
+                                <div class="budget-item-desc">피치항공 특가 · 수하물 20kg 포함</div>
+                            </div>
+                            <div class="budget-item-amount" style="color:var(--sakura)">180,000원</div>
+                        </div>
+                        <div class="budget-item">
+                            <div class="budget-item-dot" style="background:var(--nintendo)"></div>
+                            <div class="budget-item-info">
+                                <div class="budget-item-label">🏨 숙소 (3박)</div>
+                                <div class="budget-item-desc">난바 게스트하우스 2인1실</div>
+                            </div>
+                            <div class="budget-item-amount" style="color:var(--nintendo-light)">66,000원</div>
+                        </div>
+                        <div class="budget-item">
+                            <div class="budget-item-dot" style="background:var(--gold)"></div>
+                            <div class="budget-item-info">
+                                <div class="budget-item-label">🍜 식비 (4일)</div>
+                                <div class="budget-item-desc">하루 평균 5,000엔 · 15곳 맛집</div>
+                            </div>
+                            <div class="budget-item-amount" style="color:var(--gold)">180,000원</div>
+                        </div>
+                        <div class="budget-item">
+                            <div class="budget-item-dot" style="background:#00B894"></div>
+                            <div class="budget-item-info">
+                                <div class="budget-item-label">🚇 교통 (4일)</div>
+                                <div class="budget-item-desc">난카이 전철 + 지하철 1일권</div>
+                            </div>
+                            <div class="budget-item-amount" style="color:#00E676">45,000원</div>
+                        </div>
+                        <div class="budget-item">
+                            <div class="budget-item-dot" style="background:#A29BFE"></div>
+                            <div class="budget-item-info">
+                                <div class="budget-item-label">🎢 관광·입장료</div>
+                                <div class="budget-item-desc">오사카성 + USJ 1일권 + 전망대</div>
+                            </div>
+                            <div class="budget-item-amount" style="color:#A29BFE">110,000원</div>
+                        </div>
+                        <div class="budget-item">
+                            <div class="budget-item-dot" style="background:var(--neon)"></div>
+                            <div class="budget-item-info">
+                                <div class="budget-item-label">🛡️ 여행자 보험 + SIM</div>
+                                <div class="budget-item-desc">3일 eSIM + 실손보험</div>
+                            </div>
+                            <div class="budget-item-amount" style="color:var(--neon-glow)">25,000원</div>
+                        </div>
+                    </div>
+                    <div class="budget-total">
+                        <div class="budget-total-label">인당 총 예산</div>
+                        <div class="budget-total-amount">606,000원</div>
+                        <div class="budget-total-note">※ 환율 및 항공 특가에 따라 변동 가능</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== TIPS SECTION ===== -->
+    <section class="tips reveal" aria-label="절약 팁">
+        <div class="container">
+            <div class="tips-header">
+                <h2 class="section-title">더 아끼는 <span>절약 꿀팁</span></h2>
+                <p class="section-subtitle">현지인도 모르는 오사카 여행 절약 비법 대공개</p>
+            </div>
+            <div class="tips-grid">
+                <article class="tip-card">
+                    <div class="tip-card-icon">🕐</div>
+                    <h4>이른 아침 항공권 예약</h4>
+                    <p>새벽 6~7시 출발 편이 가장 저렴. 전날 밤 공항 근처 수면실 이용하면 숙소비도 절약</p>
+                    <span class="savings-badge">절약 -50,000원</span>
+                </article>
+                <article class="tip-card">
+                    <div class="tip-card-icon">📱</div>
+                    <h4>로밍 대신 eSIM 사용</h4>
+                    <p>유심보다 eSIM이 30% 저렴. Ubigi·Airqo 3일 5GB 데이터로 지도·번역 앱 충분</p>
+                    <span class="savings-badge">절약 -20,000원</span>
+                </article>
+                <article class="tip-card">
+                    <div class="tip-card-icon">🏪</div>
+                    <h4>편의점 아침 해먹기</h4>
+                    <p>세븐일레븐·패밀리마트 오니기리+샐러드 세트가 400엔. 호텔 조식보다 3배 저렴</p>
+                    <span class="savings-badge">절약 -25,000원</span>
+                </article>
+                <article class="tip-card">
+                    <div class="tip-card-icon">🚃</div>
+                    <h4>오사카 1일 지하철 패스</h4>
+                    <p>1일 승차권 ¥600으로 지하철 무제한 탑승. 한 번이라도 3번 타면 본전</p>
+                    <span class="savings-badge">절약 -15,000원</span>
+                </article>
+                <article class="tip-card">
+                    <div class="tip-card-icon">💳</div>
+                    <h4>현지 ATM 수수료 피하기</h4>
+                    <p>신한은행·우리은행 일본 ATM 무료 출금. 토스·카카오뱅크 환전 수수료 0원 활용</p>
+                    <span class="savings-badge">절약 -10,000원</span>
+                </article>
+                <article class="tip-card">
+                    <div class="tip-card-icon">🎯</div>
+                    <h4>무료 명소 우선 방문</h4>
+                    <p>도톤보리·신사이바시·오사카성 공원·덴덴타운 모두 무료. 유료는 1일 패스로 할인</p>
+                    <span class="savings-badge">절약 -30,000원</span>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== SPOTS SECTION ===== -->
+    <section class="spots reveal" aria-label="추천 명소">
+        <div class="container">
+            <div class="spots-header">
+                <h2 class="section-title">놓치면 후회할 <span>추천 명소</span></h2>
+                <p class="section-subtitle">오사카 여행에서 꼭 가봐야 할 핫플레이스 모음</p>
+            </div>
+            <div class="spots-scroll" role="list">
+                <article class="spot-card" role="listitem">
+                    <img src="https://images.unsplash.com/photo-1590559899731-a382839e5549?w=400&h=250&fit=crop" alt="오사카 성" class="spot-img" loading="lazy">
+                    <div class="spot-body">
+                        <div class="spot-name">🏯 오사카성</div>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-3)">도요토미 히데요시가 축조한 오사카의 상징. 공원은 무료!</p>
+                        <div class="spot-meta">
+                            <span class="spot-cost">¥600</span>
+                            <span class="spot-rating">⭐ 4.8</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="spot-card" role="listitem">
+                    <img src="https://images.unsplash.com/photo-1545569341-9eb8b30979d9?w=400&h=250&fit=crop" alt="도톤보리" class="spot-img" loading="lazy">
+                    <div class="spot-body">
+                        <div class="spot-name">🏮 도톤보리</div>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-3)">밤이 되면 네온사인이 빛나는 오사카 제1번가</p>
+                        <div class="spot-meta">
+                            <span class="spot-cost">무료</span>
+                            <span class="spot-rating">⭐ 4.9</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="spot-card" role="listitem">
+                    <img src="https://images.unsplash.com/photo-1551641506-ee5bf4cb45f1?w=400&h=250&fit=crop" alt="신세카이" class="spot-img" loading="lazy">
+                    <div class="spot-body">
+                        <div class="spot-name">🗼 신세카이·츠텐카쿠</div>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-3)">레트로 감성 폭발! 오사카 사람들의 원조 번화가</p>
+                        <div class="spot-meta">
+                            <span class="spot-cost">¥1,000</span>
+                            <span class="spot-rating">⭐ 4.5</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="spot-card" role="listitem">
+                    <img src="https://images.unsplash.com/photo-1579880673946-e24bdc66b04f?w=400&h=250&fit=crop" alt="유니버설 스튜디오" class="spot-img" loading="lazy">
+                    <div class="spot-body">
+                        <div class="spot-name">🎢 유니버설 스튜디오</div>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-3)">마리오 월드가 있는 곳! 하루 종일 즐기는 테마파크</p>
+                        <div class="spot-meta">
+                            <span class="spot-cost">¥8,600</span>
+                            <span class="spot-rating">⭐ 4.9</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="spot-card" role="listitem">
+                    <img src="https://images.unsplash.com/photo-1528360983277-13d401cdc186?w=400&h=250&fit=crop" alt="쿠로몬 시장" class="spot-img" loading="lazy">
+                    <div class="spot-body">
+                        <div class="spot-name">🐟 쿠로몬 시장</div>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-3)">오사카의 주방! 신선한 해산물과 와규를 길거리에서</p>
+                        <div class="spot-meta">
+                            <span class="spot-cost">무료 입장</span>
+                            <span class="spot-rating">⭐ 4.7</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="spot-card" role="listitem">
+                    <img src="https://images.unsplash.com/photo-1554797517-7b3c8f9c4d7b?w=400&h=250&fit=crop" alt="덴덴타운" class="spot-img" loading="lazy">
+                    <div class="spot-body">
+                        <div class="spot-name">🎮 덴덴타운 (니폰바시)</div>
+                        <p style="font-size:0.85rem;color:var(--text-secondary);margin-bottom:var(--space-3)">오사카의 아키하바라! 애니메·전자제품·만화카페의 천국</p>
+                        <div class="spot-meta">
+                            <span class="spot-cost">무료</span>
+                            <span class="spot-rating">⭐ 4.4</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===== FOOTER ===== -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <div class="footer-cta-wrap reveal">
+                <h2 class="footer-cta-title">지금 바로 <span>예약하세요!</span></h2>
+                <p class="footer-cta-sub">다음주 출발 특가, 선착순 마감 임박</p>
+                <a href="https://join.slack.com/t/ad-8xu6282/shared_invite/zt-3ryiuyoau-LiDz9BcT2Sv30t9agRa0CQ" target="_blank" class="btn-primary" style="font-size:1.1rem;padding:var(--space-5) var(--space-10);">
+                    🗾 여행 예약하기
+                </a>
+            </div>
+            <div class="footer-divider"></div>
+            <p class="footer-copy">
+                © 2026 오사카초저가여행 · 본 페이지는 여행 홍보 목적의 랜딩페이지입니다<br>
+                <span style="margin-top:var(--space-2);display:inline-block;">가격 및 일정은 예고 없이 변경될 수 있습니다 · <a href="#">개인정보처리방침</a></span>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        /* ===== NAV SCROLL EFFECT ===== */
+        (function() {
+            var nav = document.querySelector('.nav');
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 60) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            }, { passive: true });
+        })();
+
+        /* ===== DAY TABS ===== */
+        (function() {
+            var tabs = document.querySelectorAll('.day-tab');
+            var contents = document.querySelectorAll('.day-content');
+
+            tabs.forEach(function(tab) {
+                tab.addEventListener('click', function() {
+                    var day = this.getAttribute('data-day');
+                    tabs.forEach(function(t) {
+                        t.classList.remove('active');
+                        t.setAttribute('aria-selected', 'false');
+                    });
+                    this.classList.add('active');
+                    this.setAttribute('aria-selected', 'true');
+
+                    contents.forEach(function(c) {
+                        c.classList.remove('active');
+                    });
+                    document.getElementById(day).classList.add('active');
+                });
+            });
+        })();
+
+        /* ===== SCROLL REVEAL ===== */
+        (function() {
+            var reveals = document.querySelectorAll('.reveal');
+            var observer = new IntersectionObserver(function(entries) {
+                entries.forEach(function(entry) {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            });
+            reveals.forEach(function(el) {
+                observer.observe(el);
+            });
+        })();
+
+        /* ===== BUDGET CHART ===== */
+        (function() {
+            var ctx = document.getElementById('budgetChart');
+            if (!ctx) return;
+
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['항공', '숙소', '식비', '교통', '관광', '보험/SIM'],
+                    datasets: [{
+                        data: [180000, 66000, 180000, 45000, 110000, 25000],
+                        backgroundColor: [
+                            '#FF6B9D',
+                            '#0066FF',
+                            '#FDB813',
+                            '#00B894',
+                            '#A29BFE',
+                            '#FF1493'
+                        ],
+                        borderColor: '#1A1A2E',
+                        borderWidth: 3,
+                        hoverBorderColor: '#2A2A4A',
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    cutout: '62%',
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#B0B8D6',
+                                font: {
+                                    family: "'Noto Sans KR', sans-serif",
+                                    size: 12
+                                },
+                                padding: 16,
+                                usePointStyle: true,
+                                pointStyleWidth: 10
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(26,26,46,0.95)',
+                            titleColor: '#FFFFFF',
+                            bodyColor: '#B0B8D6',
+                            borderColor: 'rgba(255,255,255,0.1)',
+                            borderWidth: 1,
+                            cornerRadius: 8,
+                            padding: 12,
+                            titleFont: { family: "'Noto Sans KR', sans-serif", weight: 'bold' },
+                            bodyFont: { family: "'Noto Sans KR', sans-serif" },
+                            callbacks: {
+                                label: function(context) {
+                                    var val = context.parsed;
+                                    var total = context.dataset.data.reduce(function(a, b) { return a + b; }, 0);
+                                    var pct = ((val / total) * 100).toFixed(1);
+                                    return context.label + ': ' + val.toLocaleString() + '원 (' + pct + '%)';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
